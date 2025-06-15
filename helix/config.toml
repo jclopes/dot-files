@@ -1,0 +1,10 @@
+# theme = "naysayer"
+theme = "zerika-dark"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "underline"
+select = "underline"
+
+[editor.soft-wrap]
+enable = true
