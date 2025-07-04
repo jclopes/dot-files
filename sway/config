@@ -21,6 +21,14 @@ set $term foot
 #set $menu dmenu_path | dmenu | xargs swaymsg exec --
 set $menu wofi --show | xargs swaymsg exec --
 
+### Needed for screenshare to work on slack and chrome
+# +++
+exec dbus-update-activation-environment --systemd \
+        WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec systemctl --user import-environment \
+        WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+# ---
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
@@ -31,8 +39,8 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
-set $laptop_screen "Apple Computer Inc Color LCD Unknown"
-output $laptop_screen scale 1.5
+set $laptop_screen eDP-1
+output $laptop_screen scale 1
 set $dell_screen "Dell Inc. DELL U2723QE 5699FH3"
 output $dell_screen scale 1.5
 
@@ -124,22 +132,12 @@ input 1329:256:Wacom_Co.,Ltd._Wacom_One_pen_tablet_small map_from_region 0x0 1x0
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
     bindsym $mod+$right focus right
-    # Or use $mod+[up|down|left|right]
-    bindsym $mod+Left focus left
-    bindsym $mod+Down focus down
-    bindsym $mod+Up focus up
-    bindsym $mod+Right focus right
 
     # Move the focused window with the same, but add Shift
     bindsym $mod+Shift+$left move left
     bindsym $mod+Shift+$down move down
     bindsym $mod+Shift+$up move up
     bindsym $mod+Shift+$right move right
-    # Ditto, with arrow keys
-    bindsym $mod+Shift+Left move left
-    bindsym $mod+Shift+Down move down
-    bindsym $mod+Shift+Up move up
-    bindsym $mod+Shift+Right move right
 #
 # Workspaces:
 #
@@ -171,6 +169,10 @@ input 1329:256:Wacom_Co.,Ltd._Wacom_One_pen_tablet_small map_from_region 0x0 1x0
     bindsym $mod+Shift+0 move container to workspace number 10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
+
+    # Move current workspace to the next screen
+    bindsym $mod+Page_Up move workspace to output right
+    bindsym $mod+Page_Down move workspace to output left
 #
 # Layout stuff:
 #
@@ -262,8 +264,8 @@ bindsym $mod+Escape mode "$screenshot"
     bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
 
     # Keyboard Backlight Control
-    bindsym XF86KbdBrightnessUp exec brightnessctl --device='smc::kbd_backlight' set 20%+
-    bindsym XF86KbdBrightnessDown exec brightnessctl --device='smc::kbd_backlight' set 20%-
+    bindsym XF86KbdBrightnessUp exec --no-startup-id brightnessctl set 20%+
+    bindsym XF86KbdBrightnessDown exec --no-startup-id brightnessctl set 20%-
 
 #
 # Status Bar:
@@ -288,3 +290,9 @@ bar {
 
 include /etc/sway/config.d/*
 exec_always ~/.bin/laptop_lish.sh
+
+# Notification Daemon
+exec swaync
+
+# Toggle control center
+bindsym $mod+Shift+n exec swaync-client -t -sw
