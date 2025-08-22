@@ -86,6 +86,9 @@ input "type:touchpad" {
 input type:keyboard {
   xkb_layout "us"
   xkb_variant "mac"
+}
+
+input "1:1:AT_Translated_Set_2_keyboard" {
   # Capslock key should work as escape key
   # See /usr/share/X11/xkb/rules/xorg.lst for options
   xkb_options ctrl:nocaps
