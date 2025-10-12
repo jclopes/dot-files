@@ -112,7 +112,7 @@ input 1329:256:Wacom_Co.,Ltd._Wacom_One_pen_tablet_small map_from_region 0x0 1x0
     bindsym $mod+Shift+q kill
 
     # Start your launcher
-    bindsym $mod+d exec $menu
+    bindsym $mod+space exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -126,7 +126,9 @@ input 1329:256:Wacom_Co.,Ltd._Wacom_One_pen_tablet_small map_from_region 0x0 1x0
 
     # Exit sway (logs you out of your Wayland session)
     #bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
-    bindsym $mod+Shift+e exec 'PATH=.config/wofi-logout /usr/bin/wofi -c .config/wofi-logout/config'
+    #bindsym $mod+Shift+e exec 'PATH=.config/wofi-logout /usr/bin/wofi -c .config/wofi-logout/config'
+    # All executables inside the .config/wofi-logout/ folder 
+    bindsym $mod+Shift+e exec 'find .config/wofi-logout/ -type f -executable -printf "%f\n" | sort | wofi -c .config/wofi-logout/config | xargs -I{} swaymsg exec ".config/wofi-logout/{}"'
 #
 # Moving around:
 #
@@ -186,7 +188,7 @@ input 1329:256:Wacom_Co.,Ltd._Wacom_One_pen_tablet_small map_from_region 0x0 1x0
     bindsym $mod+v splitv
 
     # Switch the current container between different layout styles
-    bindsym $mod+s layout stacking
+    # bindsym $mod+s layout stacking
     bindsym $mod+w layout tabbed
     bindsym $mod+e layout toggle split
 
@@ -194,10 +196,10 @@ input 1329:256:Wacom_Co.,Ltd._Wacom_One_pen_tablet_small map_from_region 0x0 1x0
     bindsym $mod+f fullscreen
 
     # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+space floating toggle
+    bindsym $mod+Shift+d floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+    bindsym $mod+d focus mode_toggle
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
@@ -292,7 +294,7 @@ bar {
 }
 
 include /etc/sway/config.d/*
-exec_always ~/.bin/laptop_lish.sh
+# exec_always ~/.bin/laptop_lish.sh
 
 # Notification Daemon
 exec swaync
