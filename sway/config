@@ -19,7 +19,7 @@ set $term foot
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 #set $menu dmenu_path | dmenu | xargs swaymsg exec --
-set $menu wofi --show | xargs swaymsg exec --
+set $menu wofi --show drun --allow-images | xargs swaymsg exec --
 
 ### Needed for screenshare to work on slack and chrome
 # +++
@@ -65,6 +65,8 @@ exec swayidle -w -d \
 bindswitch --reload --locked lid:on output $laptop_screen disable
 bindswitch --reload --locked lid:off output $laptop_screen enable
 
+bindsym $mod+m output $laptop_screen toggle
+
 ### Input configuration
 #
 # Example configuration:
@@ -106,7 +108,7 @@ input 1329:256:Wacom_Co.,Ltd._Wacom_One_pen_tablet_small map_from_region 0x0 1x0
 # Basics:
 #
     # Start a terminal
-    bindsym $mod+Return exec $term
+    bindsym $mod+t exec $term
 
     # Kill focused window
     bindsym $mod+Shift+q kill
