@@ -81,6 +81,7 @@ bindsym $mod+m output $laptop_screen toggle
 input "type:touchpad" {
     dwt enabled
     tap enabled
+    tap_button_map lrm
     drag enabled
     drag_lock enabled
     natural_scroll enabled
@@ -153,6 +154,9 @@ input 1329:256:Wacom_Co.,Ltd._Wacom_One_pen_tablet_small map_from_region 0x0 1x0
     # Cycle through workspaces
     bindsym $mod+Tab workspace next
     bindsym $mod+Shift+Tab workspace prev
+    # 4-finger swipes on touchpads (same as $mod+Tab / $mod+Shift+Tab)
+    bindgesture swipe:4:left workspace next
+    bindgesture swipe:4:right workspace prev
 
     # Switch to workspace
     bindsym $mod+1 workspace number 1
